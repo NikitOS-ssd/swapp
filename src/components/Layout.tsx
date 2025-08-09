@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom'
 import { ThemeToggle } from './ThemeToggle'
 import { OfflineBadge } from './OfflineBadge'
+import { LangSwitch } from './LangSwitch'
 
 export function Layout({ children }: PropsWithChildren) {
   return (
@@ -19,6 +20,7 @@ export function Layout({ children }: PropsWithChildren) {
           </Typography>
           <OfflineBadge />
           <Box sx={{ flex: 1 }} />
+          <LangSwitch />
           <ThemeToggle />
         </Toolbar>
       </AppBar>

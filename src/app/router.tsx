@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { PeopleListPage } from '@/features/people/pages/PeopleListPage'
-import { PersonPage } from '@/features/people/pages/PersonPage'
+import { PeopleListPage } from '@/pages/PeopleListPage'
+import { PersonPage } from '@/pages/PersonPage'
 import { Layout } from '@/components/Layout'
 import { ScrollToTop } from '@/components/ScrollToTop'
 

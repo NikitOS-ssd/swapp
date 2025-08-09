@@ -27,27 +27,26 @@ export default defineConfig({
       workbox: {
         navigateFallback: '/index.html',
         runtimeCaching: [
-          // SWAPI: NetworkFirst с таймаутом (есть офлайн-фолбэк из кэша)
+          // SWAPI: NetworkFirst with timeout (offline fallback from cache)
           {
             urlPattern: ({ url }) => url.origin === 'https://swapi.py4e.com' && url.pathname.startsWith('/api/'),
             handler: 'NetworkFirst',
             options: {
               cacheName: 'swapi-cache',
               networkTimeoutSeconds: 5,
-              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 }, // 1 день
+              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 },
               cacheableResponse: { statuses: [0, 200] }
             }
           },
-          // Статические ассеты Vite: stale-while-revalidate
+          // Vite static assets: stale-while-revalidate
           {
             urlPattern: ({ request }) => request.destination === 'script' || request.destination === 'style' || request.destination === 'font',
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'assets-cache',
-              expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 30 } // 30 дней
+              expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 30 }
             }
           },
-          // Изображения (если появятся)
           {
             urlPattern: ({ request }) => request.destination === 'image',
             handler: 'StaleWhileRevalidate',
@@ -59,7 +58,7 @@ export default defineConfig({
         ]
       },
       devOptions: {
-        enabled: true // чтобы PWA работала в dev (удобно тестить)
+        enabled: true
       }
     })
   ],

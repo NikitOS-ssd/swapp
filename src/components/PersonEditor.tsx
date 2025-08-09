@@ -21,7 +21,6 @@ export function PersonEditor({ id, apiData }: Props) {
 
   const merged = useMemo(() => mergeWithEdits(apiData, saved), [apiData, saved])
 
-  // Локальный стейт формы (не сохраняется автоматически)
   const [form, setForm] = useState({
     name: merged.name,
     height: merged.height,
@@ -34,7 +33,6 @@ export function PersonEditor({ id, apiData }: Props) {
   })
 
   useEffect(() => {
-    // если поменялся источник (например, после обновления saved), обновим форму
     setForm({
       name: merged.name,
       height: merged.height,

@@ -7,7 +7,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const PAGE_SIZE = 10 // у SWAPI по умолчанию 10
+const PAGE_SIZE = 10
 
 export function PeopleListPage() {
   const { t } = useTranslation()

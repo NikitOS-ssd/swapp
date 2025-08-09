@@ -2,14 +2,10 @@
 import { registerSW } from 'virtual:pwa-register'
 
 registerSW({
-  immediate: true, // регистрируем сразу
+  immediate: true,
   onNeedRefresh() {
-    // можно показать тост “Доступна новая версия — обновить?”
-    // Для простоты просто перезагрузим вкладку:
     location.reload()
   },
   onOfflineReady() {
-    // можно показать тост “Приложение готово работать офлайн”
-    // оставим без UI
   }
 })

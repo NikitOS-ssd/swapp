@@ -18,7 +18,6 @@ export const useThemeStore = create<ThemeState>()(
   )
 )
 
-// Вспомогательная функция вычисления итогового режима
 export function resolveMode(pref: ThemeMode): 'light' | 'dark' {
   if (pref !== 'system') return pref
   const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches

@@ -1,7 +1,7 @@
 # ---------- Builder ----------
 FROM node:20-alpine AS builder
 WORKDIR /app
-# Ускоряет npm/yarn, фиксит musl vs glibc кейсы некоторых пакетов
+# Speeds up npm/yarn and fixes musl vs glibc issues for some packages
 RUN apk add --no-cache libc6-compat
 
 COPY package.json yarn.lock ./

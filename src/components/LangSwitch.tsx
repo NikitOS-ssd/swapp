@@ -24,7 +24,7 @@ export function LangSwitch() {
     <>
       <Tooltip title={`Language: ${cur.toUpperCase()}`}>
         <IconButton color="inherit" onClick={(e) => setAnchor(e.currentTarget)} aria-label="language">
-          <LanguageIcon />
+          <LanguageIcon sx={{ color: 'black' }} />
         </IconButton>
       </Tooltip>
       <Menu anchorEl={anchor} open={!!anchor} onClose={() => setAnchor(null)}>

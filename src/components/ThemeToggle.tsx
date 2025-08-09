@@ -2,6 +2,7 @@ import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText, Tooltip } from 
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 import { useState } from 'react'
 import { ThemeMode, useThemeStore } from '@/store/theme'
+import { useTranslation } from 'react-i18next'
 
 const YodaIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
@@ -16,6 +17,7 @@ const VaderIcon = () => (
 )
 
 export function ThemeToggle() {
+  const { t } = useTranslation()
   const mode = useThemeStore((s) => s.mode)
   const setMode = useThemeStore((s) => s.setMode)
   const [anchor, setAnchor] = useState<null | HTMLElement>(null)
@@ -34,7 +36,7 @@ export function ThemeToggle() {
 
   return (
     <>
-      <Tooltip title={`Тема: ${mode}`}>
+      <Tooltip title={t('theme.title', { mode })}>
         <IconButton color="inherit" onClick={(e) => setAnchor(e.currentTarget)} aria-label="theme">
           {icon}
         </IconButton>
@@ -42,15 +44,15 @@ export function ThemeToggle() {
       <Menu anchorEl={anchor} open={!!anchor} onClose={() => setAnchor(null)}>
         <MenuItem onClick={choose('light')}>
           <ListItemIcon><YodaIcon /></ListItemIcon>
-          <ListItemText>Светлая</ListItemText>
+          <ListItemText>{t('theme.light')}</ListItemText>
         </MenuItem>
         <MenuItem onClick={choose('dark')}>
           <ListItemIcon><VaderIcon /></ListItemIcon>
-          <ListItemText>Тёмная</ListItemText>
+          <ListItemText>{t('theme.dark')}</ListItemText>
         </MenuItem>
         {/* <MenuItem onClick={choose('system')}>
           <ListItemIcon><SettingsBrightnessIcon fontSize="small" /></ListItemIcon>
-          <ListItemText>Системная</ListItemText>
+          <ListItemText>{t('theme.system')}</ListItemText>
         </MenuItem> */}
       </Menu>
     </>

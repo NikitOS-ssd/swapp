@@ -2,6 +2,7 @@ import { TextField, InputAdornment, IconButton } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Clear'
 import { ChangeEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   value: string
@@ -10,13 +11,14 @@ type Props = {
 }
 
 export function SearchBar({ value, onChange, placeholder }: Props) {
+  const { t } = useTranslation()
   const handle = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)
   return (
     <TextField
       fullWidth
       value={value}
       onChange={handle}
-      placeholder={placeholder ?? 'Поиск по имени...'}
+      placeholder={placeholder ?? t('people.searchPlaceholder')}
       size="small"
       InputProps={{
         startAdornment: (

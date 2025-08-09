@@ -7,7 +7,8 @@
     "searchPlaceholder": "Find Luke, Leia, R2-D2...",
     "found": "Found: {{count}}",
     "updating": "Updating…",
-    "empty": "Nothing found. Try another query."
+    "empty": "Nothing found. Try another query.",
+    "loadError": "Failed to load list"
   },
   "person": {
     "title": "Character #{{id}}",
@@ -15,6 +16,9 @@
     "savedLocally": "Saved locally",
     "saveLocal": "Save locally",
     "reset": "Reset changes",
+    "loadError": "Failed to load character",
+    "changesSaved": "Changes saved locally",
+    "changesReset": "Local changes reset",
     "fields": {
       "name": "Name",
       "gender": "Gender",
@@ -27,9 +31,10 @@
     }
   },
   "theme": {
-    "light": "Light (Yoda)",
-    "dark": "Dark (Vader)",
-    "system": "System"
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "title": "Theme: {{mode}}"
   },
   "offline": "You are offline"
 }

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Chip } from '@mui/material'
 import CloudOffIcon from '@mui/icons-material/CloudOff'
+import { useTranslation } from 'react-i18next'
 
 export function OfflineBadge() {
+  const { t } = useTranslation()
   const [online, setOnline] = useState(navigator.onLine)
   useEffect(() => {
     const on = () => setOnline(true)
@@ -17,11 +19,11 @@ export function OfflineBadge() {
   if (online) return null
   return (
     <Chip
-      icon= {< CloudOffIcon />}
-label = "Вы офлайн"
-color = "warning"
-size = "small"
-sx = {{ ml: 2 }}
+      icon={<CloudOffIcon />}
+      label={t('offline')}
+      color="warning"
+      size="small"
+      sx={{ ml: 2 }}
     />
   )
 }

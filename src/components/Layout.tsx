@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom'
 import { ThemeToggle } from './ThemeToggle'
 import { OfflineBadge } from './OfflineBadge'
 import { LangSwitch } from './LangSwitch'
+import { useTranslation } from 'react-i18next'
 
 export function Layout({ children }: PropsWithChildren) {
+  const { t } = useTranslation()
+  
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <AppBar position="sticky" enableColorOnDark>
@@ -16,7 +19,7 @@ export function Layout({ children }: PropsWithChildren) {
             to="/"
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            SWApp
+            {t('app.title')}
           </Typography>
           <OfflineBadge />
           <Box sx={{ flex: 1 }} />

@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "build:firebase": "cross-env NODE_ENV=production bash scripts/build-firebase.sh",
-    "firebase:serve": "firebase hosting:serve",
     "firebase:login": "firebase login",
     "firebase:token": "firebase login:ci"
   },

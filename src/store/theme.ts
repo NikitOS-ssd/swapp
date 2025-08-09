@@ -11,12 +11,13 @@ type ThemeState = {
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      mode: 'system',
+      mode: 'light',
       setMode: (mode) => set({ mode }),
     }),
-    { name: 'theme-pref-v1' }
+    { name: 'theme-pref-v2' }
   )
 )
+
 
 export function resolveMode(pref: ThemeMode): 'light' | 'dark' {
   if (pref !== 'system') return pref

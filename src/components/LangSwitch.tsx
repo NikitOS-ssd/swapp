@@ -4,6 +4,7 @@ import CheckIcon from '@mui/icons-material/Check'
 import i18n from '@/i18n'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useTheme } from '@mui/material/styles'
 
 const langs = [
   { code: 'en', label: 'English' },
@@ -14,6 +15,8 @@ export function LangSwitch() {
   const { i18n: i18nInst } = useTranslation()
   const [anchor, setAnchor] = useState<null | HTMLElement>(null)
   const cur = i18nInst.resolvedLanguage || 'en'
+  const theme = useTheme()
+  const iconColor = theme.palette.mode === 'dark' ? '#000' : '#fff'
 
   const choose = (lng: string) => () => {
     i18n.changeLanguage(lng)
@@ -23,8 +26,8 @@ export function LangSwitch() {
   return (
     <>
       <Tooltip title={`Language: ${cur.toUpperCase()}`}>
-        <IconButton color="inherit" onClick={(e) => setAnchor(e.currentTarget)} aria-label="language">
-          <LanguageIcon sx={{ color: 'black' }} />
+        <IconButton onClick={(e) => setAnchor(e.currentTarget)} aria-label="language" sx={{ color: iconColor }}>
+          <LanguageIcon htmlColor={iconColor} />
         </IconButton>
       </Tooltip>
       <Menu anchorEl={anchor} open={!!anchor} onClose={() => setAnchor(null)}>

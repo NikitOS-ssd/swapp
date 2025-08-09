@@ -1,69 +1,225 @@
-# React + TypeScript + Vite
+# SWApp — React + TypeScript + Vite + MUI + PWA + i18n + Docker + Firebase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Star Wars directory (list + search + details) with local editing, offline support (PWA), containerized build, and Firebase Hosting deployment without exposing your Firebase account to other developers.
 
-Currently, two official plugins are available:
+## 📋 Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Tech Stack](#-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Available Scripts](#-available-scripts)
+- [Environment Variables](#-environment-variables)
+- [Firebase Hosting](#-firebase-hosting)
+- [Internationalization (i18n)](#-internationalization-i18n)
+- [Progressive Web App (PWA)](#-progressive-web-app-pwa)
+- [Docker Support](#-docker-support)
+- [Troubleshooting](#-troubleshooting)
+- [License](#-license)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Tech Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React 18**, **TypeScript**, **Vite**
+- **Material UI (MUI)**, **@tanstack/react-query**, **zustand**
+- **i18next** (EN/RU) with language detector & localStorage
+- **vite-plugin-pwa** (offline + installable)
+- **Docker** (multi-stage, Nginx), **Firebase Hosting**
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ⚙️ Prerequisites
+
+- Node.js **>= 18** (recommend 20+)
+- Yarn (classic): `npm i -g yarn` (optional if you prefer npm)
+- (Optional) Docker Desktop (for container run)
+- Firebase CLI (global or via `npx`): `npm i -g firebase-tools`
+
+---
+
+## 🚀 Getting Started
+
+### 1) Clone and install
+
+```bash
+git clone <REPO_URL> swapp
+cd swapp
+yarn
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2) Run in development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+yarn dev
+# open http://localhost:5173
 ```
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+  api/               # SWAPI client + React Query hooks
+  app/               # Providers (theme, router, query), theme builder
+  components/        # Layout, toggles, reusable UI
+  features/people/   # List & detail pages for characters
+  hooks/             # Shared hooks (debounce, etc.)
+  i18n/              # i18next init + locales (en.json, ru.json)
+  store/             # zustand stores (theme, local edits)
+  pwa.ts             # PWA service worker registration
+```
+
+---
+
+## 📜 Available Scripts
+
+### Development & Build
+```bash
+# Dev / Build / Preview
+yarn dev
+yarn build
+yarn preview
+```
+
+### Docker (optional)
+```bash
+yarn docker:build
+yarn docker:up
+```
+
+### Firebase (CLI helpers)
+```bash
+yarn firebase:login      # one-time login (local machine)
+yarn firebase:token      # generate CI token if needed
+yarn firebase:serve      # local Hosting preview at http://localhost:5000
+```
+
+### Build + (optional) Deploy to Firebase Hosting
+```bash
+yarn build:firebase
+```
+
+`yarn build:firebase` runs `scripts/build-firebase.sh` which:
+- builds the app,
+- generates `.firebaserc` from environment variables (not committed),
+- deploys only if `FIREBASE_TOKEN` is provided.
+
+---
+
+## 🔐 Environment Variables
+
+Create a local `.env` (never commit) based on `.env.example`:
+
+```ini
+FIREBASE_PROJECT_ID=your-firebase-project-id
+# Optional: for non-interactive deploys (local or CI)
+FIREBASE_TOKEN=your_firebase_ci_token
+```
+
+Get a token via: `yarn firebase:token`.
+
+We do not commit `.firebaserc`. It's generated at build time from `FIREBASE_PROJECT_ID`, so you can easily swap projects/accounts without changing code.
+
+---
+
+## 🔥 Firebase Hosting: Build & Preview/Deploy
+
+### Local build (and optional deploy if token present)
+```bash
+yarn build:firebase
+```
+
+If `FIREBASE_TOKEN` is set in your environment, this will deploy to your project.
+
+If not, it will only build and generate `.firebaserc`.
+
+### Local preview (no deploy)
+```bash
+yarn firebase:serve
+# open http://localhost:5000
+```
+
+### One-time login (if you prefer manual CLI auth locally)
+```bash
+yarn firebase:login
+```
+
+---
+
+## 🌐 Internationalization (i18n)
+
+Locales: `src/i18n/locales/en.json`, `src/i18n/locales/ru.json`
+
+Language is auto-detected (localStorage → querystring `?lng=` → navigator) and can be switched in the app bar.
+
+---
+
+## 📱 Progressive Web App (PWA)
+
+`vite-plugin-pwa` with:
+- precache of build assets
+- runtime caching for SWAPI requests (NetworkFirst)
+- service worker auto-update enabled
+
+Icons in `public/` (`pwa-192x192.png`, `pwa-512x512.png`, `maskable-512x512.png`)
+
+Check with:
+```bash
+yarn build && yarn preview
+# then run Lighthouse (PWA) in Chrome DevTools
+```
+
+---
+
+## 🐳 Docker (optional)
+
+Build and run the production image with Nginx (SPA history fallback + proper caching):
+
+```bash
+yarn docker:build
+yarn docker:up
+# open http://localhost:8080
+```
+
+---
+
+## 🔧 Troubleshooting
+
+### `cross-env: command not found`
+`yarn add -D cross-env` or remove it from scripts and set `NODE_ENV` in the shell script.
+
+### `EACCES` when running `scripts/build-firebase.sh`
+```bash
+chmod +x scripts/build-firebase.sh
+```
+Optionally: `git update-index --chmod=+x scripts/build-firebase.sh`
+
+### Type errors for `virtual:pwa-register`
+Ensure `src/vite-env.d.ts` includes:
+```typescript
+/// <reference types="vite/client" />
+/// <reference types="vite-plugin-pwa/client" />
+```
+
+If IDE still complains, add a shim:
+```typescript
+// src/shims-pwa.d.ts
+declare module 'virtual:pwa-register' {
+  export function registerSW(options?: {
+    immediate?: boolean
+    onNeedRefresh?: () => void
+    onOfflineReady?: () => void
+  }): (reloadPage?: boolean) => void
+}
+```
+
+### Pagination doesn't change page
+Never mutate `URLSearchParams` in-place. Create a new instance before `setParams`.
+
+---
+
+## 📄 License
+
+MIT (or your preferred license)
